@@ -1,5 +1,5 @@
-void f() {
-	int x = 10 $ 15;
+float f() {
+    int x = 10 $ 15;
 	float ponto = .91;
 	write("Gabriel");
 	write('a');
@@ -11,5 +11,5 @@ void f() {
 	//Comentário de Linha Legal
 
 	                     
-  return .^;
+    return .^;
 }
