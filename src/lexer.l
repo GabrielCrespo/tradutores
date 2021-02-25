@@ -102,7 +102,7 @@ string											\"{print}*\"
 
 [ \t]+									{ column+=strlen(yytext); }
 
-.										{ printf("ERROR!\tat line: %d, column: %d\tUnrecognized character: %s\n", lineno, column, yytext); }
+.										{ printf("ERROR! At line: %d, column: %d. Unrecognized character: %s\n", lineno, column, yytext); }
 
 %%
 

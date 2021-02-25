@@ -1150,7 +1150,7 @@ YY_RULE_SETUP
 case 50:
 YY_RULE_SETUP
 #line 105 "lexer.l"
-{ printf("ERROR!\tat line: %d, column: %d\tUnrecognized character: %s\n", lineno, column, yytext); }
+{ printf("ERROR! At line: %d, column: %d. Unrecognized character: %s\n", lineno, column, yytext); }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
