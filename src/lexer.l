@@ -1,5 +1,7 @@
 %option noyywrap
 %option yylineno
+%option noinput
+%option nounput
 
 %{
 
@@ -96,22 +98,22 @@ string											\"{print}*\"
 {char}									{ print_token("CHAR_LIT"); column+=strlen(yytext); }
 
 
-"\n"									{ lineno += 1; column=1;}
+"\n"									{ lineno += 1; column=1; }
 
 [ \t]+									{ column+=strlen(yytext); }
 
-.										{ printf("ERROR!\tat line: %d, column: %d\t\tUnrecognized character: %s\n", lineno, column, yytext); }
+.										{ printf("ERROR!\tat line: %d, column: %d\tUnrecognized character: %s\n", lineno, column, yytext); }
 
 %%
 
 void print_token(char *token_type){
-   //printf("symbol: %s\ttoken: %s\tat line: %d\n", yytext, token_type, lineno);
-   fprintf(stderr, "Token: < %s , %s >\t\tat line: %d\n", yytext, token_type, lineno);
+   fprintf(stderr, "At line: %d\t Token: < %s, %s >\n", lineno, yytext, token_type);
 }
 
 int main(int argc, char *argv[]){
    yyin = fopen(argv[1], "r");
    yylex();
    fclose(yyin);
+   yylex_destroy();
    return 0;
 }
