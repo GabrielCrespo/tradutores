@@ -16,7 +16,6 @@
 
  void print_token(char *token_type);
  void error_handler(char *token, int line, int column);
- void print_color(char *color);
 
 %}
 
@@ -49,7 +48,9 @@ string            \"[^\"]*\"|'[^']*'
 
 "main"                  { print_token("MAIN"); column+=strlen(yytext); }
 
-"int"|"float"|"list"    { print_token("TYPE"); column+=strlen(yytext); }
+"int"                   { print_token("INT_TYPE"); column+=strlen(yytext); }
+"float"                 { print_token("FLOAT_TYPE"); column+=strlen(yytext); }
+"list"                  { print_token("LIST_TYPE"); column+=strlen(yytext); }
 
 "NIL"                   { print_token("CONST_NIL"); column+=strlen(yytext); }
 
@@ -81,7 +82,10 @@ string            \"[^\"]*\"|'[^']*'
 "=="                    { print_token("EQUAL_OP"); column+=strlen(yytext); }
 "!="                    { print_token("DIFF_OP"); column+=strlen(yytext); }
 
-">"|"<"|">="|"<="       { print_token("REL_OP"); column+=strlen(yytext); }
+">"                     { print_token("LST_OP"); column+=strlen(yytext); }
+"<"                     { print_token("GRT_OP"); column+=strlen(yytext); }
+"<="                    { print_token("LST_EQ_OP"); column+=strlen(yytext); }
+">="                    { print_token("GRT_EQ_OP"); column+=strlen(yytext); }
 
 "="                     { print_token("ASSIGN_OP"); column+=strlen(yytext); }	
 
@@ -113,10 +117,6 @@ string            \"[^\"]*\"|'[^']*'
 
 void print_token(char *token_type){
  fprintf(stderr, "At line: %d\t Token: < %s, %s >\n", lineno, yytext, token_type);
-}
-
-void print_color(char *color){
- printf("%s", color);
 }
 
 void error_handler(char *token, int line, int column) {
