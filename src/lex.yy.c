@@ -574,16 +574,16 @@ char *yytext;
 /* Block of code */
 #line 9 "lexer.l"
 
-	#include <stdio.h>
-	#include <stdlib.h>
-	#include <string.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
 
-	int lineno = 1;
-	int column = 0;
+ int lineno = 1;
+ int column = 1;
 
-	void print_token(char *token_type);
-	void error_handler(char *token, int line, int column);
-	void print_color(char *color);
+ void print_token(char *token_type);
+ void error_handler(char *token, int line, int column);
+ void print_color(char *color);
 
 #line 589 "lex.yy.c"
 /* Rules Section */
@@ -2121,18 +2121,18 @@ void print_token(char *token_type){
 }
 
 void print_color(char *color){
-	printf("%s", color);
+ printf("%s", color);
 }
 
 void error_handler(char *token, int line, int column) {
-	printf("ERROR! The character %s is not defined (line: %d, column: %d)\n", token, line, column);
+ printf("ERROR! The character %s is not defined (line: %d, column: %d)\n", token, line, column);
 }
 
 int main(int argc, char *argv[]){;
 
-  	yyin = fopen(argv[1], "r");
-  	yylex();
-  	fclose(yyin);
-  	yylex_destroy();
-  	return 0;
+   yyin = fopen(argv[1], "r");
+   yylex();
+   fclose(yyin);
+   yylex_destroy();
+   return 0;
 }

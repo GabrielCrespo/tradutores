@@ -12,7 +12,7 @@
  #include <string.h>
 
  int lineno = 1;
- int column = 0;
+ int column = 1;
 
  void print_token(char *token_type);
  void error_handler(char *token, int line, int column);
