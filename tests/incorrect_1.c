@@ -1,6 +1,5 @@
 float f() {
   int x = 10$15;
-		int %$###
 		float ponto = .91;
 		write("Gabriel");
 		write('a');
@@ -12,7 +11,7 @@ float f() {
 		//Comentário de Linha Legal
 
 	                     
-   return .^;
+   return 1;
 }
 
 int main() {
@@ -31,7 +30,7 @@ int main() {
 	FL10 = leq_10 <<  FL;
 	if (FL10 != NIL) {
 		float list AUXL;
-		int n; n = 0;
+		int n; n = 0 * ##;
 		for (AUXL=FL10; AUXL != NIL; AUXL = !AUXL) {
 			n = n + 1;
 			write(?AUXL); write(" ");
