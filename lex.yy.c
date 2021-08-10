@@ -595,7 +595,7 @@ char *yytext;
 #line 596 "lex.yy.c"
 
 #define INITIAL 0
-#define ML_COMMENT 1
+#define MULTI_LINE_COMMENT 1
 
 #ifndef YY_NO_UNISTD_H
 /* Special case for "unistd.h", since it is non-ANSI. We include it way
@@ -890,7 +890,7 @@ case 2:
 YY_RULE_SETUP
 #line 44 "src/lexer.l"
 {
-   BEGIN(ML_COMMENT);
+   BEGIN(MULTI_LINE_COMMENT);
    begin_comment_line = lineno;
    begin_comment_column = column;
 }
@@ -920,7 +920,7 @@ YY_RULE_SETUP
    lineno++;
 }
 	YY_BREAK
-case YY_STATE_EOF(ML_COMMENT):
+case YY_STATE_EOF(MULTI_LINE_COMMENT):
 #line 62 "src/lexer.l"
 { 
    unclosed_comment_error_handler(begin_comment_line, begin_comment_column);
@@ -2168,7 +2168,7 @@ void error_handler(char *token, int line, int column) {
  printf("ERROR! The character %s is not defined (line: %d, column: %d)\n", token, line, column);
 }
 
-/* Function that will criticize unclosed tokens */
+/* Function that will criticize unclosed comments */
 void unclosed_comment_error_handler(int line, int column) {
    printf("Alerta! Foi detectado um comentário de múltiplas linhas aberto mas não fechado (line: %d, column: %d)\n", line, column);
 }

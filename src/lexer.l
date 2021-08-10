@@ -23,7 +23,7 @@
 %}
 
 /* Rules Section */
-%x ML_COMMENT 
+%x MULTI_LINE_COMMENT 
 
 letter            [a-zA-Z]
 digit             [0-9]
@@ -41,24 +41,24 @@ string            \"[^\"]*\"|'[^']*'
 "//".*
 
 <INITIAL>"/*" {
-   BEGIN(ML_COMMENT);
+   BEGIN(MULTI_LINE_COMMENT);
    begin_comment_line = lineno;
    begin_comment_column = column;
 }
 
-<ML_COMMENT>"*/" {
+<MULTI_LINE_COMMENT>"*/" {
    BEGIN(INITIAL);
 }
 
-<ML_COMMENT>[^*\n]+
+<MULTI_LINE_COMMENT>[^*\n]+
 
-<ML_COMMENT>"*"
+<MULTI_LINE_COMMENT>"*"
 
-<ML_COMMENT>\n {
+<MULTI_LINE_COMMENT>\n {
    lineno++;
 }
 
-<ML_COMMENT><<EOF>> { 
+<MULTI_LINE_COMMENT><<EOF>> { 
    unclosed_comment_error_handler(begin_comment_line, begin_comment_column);
    yyterminate();
 }
@@ -142,7 +142,7 @@ void error_handler(char *token, int line, int column) {
  printf("ERROR! The character %s is not defined (line: %d, column: %d)\n", token, line, column);
 }
 
-/* Function that will criticize unclosed tokens */
+/* Function that will criticize unclosed comments */
 void unclosed_comment_error_handler(int line, int column) {
    printf("Alerta! Foi detectado um comentário de múltiplas linhas aberto mas não fechado (line: %d, column: %d)\n", line, column);
 }
