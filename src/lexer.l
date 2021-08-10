@@ -10,17 +10,20 @@
  #include <stdio.h>
  #include <stdlib.h>
  #include <string.h>
-
- int lineno = 1;
- int column = 1;
+ 
+ /* Variables that control the line and column values of a token */
+ int lineno = 1, column = 1;
+ /* Variables that control the line and column values of a comment */
+ int begin_comment_line = 0, begin_comment_column = 0;
 
  void print_token(char *token_type);
  void error_handler(char *token, int line, int column);
+ void unclosed_comment_error_handler(int line, int column);
 
 %}
 
 /* Rules Section */
-%x IN_COMMENT
+%x ML_COMMENT 
 
 letter            [a-zA-Z]
 digit             [0-9]
@@ -33,18 +36,32 @@ string            \"[^\"]*\"|'[^']*'
 
 %%
 
+
+ /* Comments Handle Section */
 "//".*
 
-<INITIAL>{
- "/*"	BEGIN(IN_COMMENT);
+<INITIAL>"/*" {
+   BEGIN(ML_COMMENT);
+   begin_comment_line = lineno;
+   begin_comment_column = column;
 }
 
-<IN_COMMENT>{
- "*/"	BEGIN(INITIAL);
- [^*\n]+
- "*"
- \n		lineno++;
-}    
+<ML_COMMENT>"*/" {
+   BEGIN(INITIAL);
+}
+
+<ML_COMMENT>[^*\n]+
+
+<ML_COMMENT>"*"
+
+<ML_COMMENT>\n {
+   lineno++;
+}
+
+<ML_COMMENT><<EOF>> { 
+   unclosed_comment_error_handler(begin_comment_line, begin_comment_column);
+   yyterminate();
+}
 
 "main"                  { print_token("MAIN"); column+=strlen(yytext); }
 
@@ -101,10 +118,10 @@ string            \"[^\"]*\"|'[^']*'
 "&"                     { print_token("REFER"); column+=strlen(yytext); }
 
 {identifier}            { print_token("ID"); column+=strlen(yytext); }
-{integer}               { print_token("INT_LIT"); column+=strlen(yytext); }
-{float}                 { print_token("FLOAT_LIT"); column+=strlen(yytext); }
-{string}                { print_token("STRING_LIT"); column+=strlen(yytext); }
-{char}                  { print_token("CHAR_LIT"); column+=strlen(yytext); }
+{integer}               { print_token("INT_CONST"); column+=strlen(yytext); }
+{float}                 { print_token("FLOAT_CONST"); column+=strlen(yytext); }
+{string}                { print_token("STRING"); column+=strlen(yytext); }
+{char}                  { print_token("CHAR"); column+=strlen(yytext); }
 
 
 "\n"                    { lineno += 1; column=1; }
@@ -115,12 +132,19 @@ string            \"[^\"]*\"|'[^']*'
 
 %%
 
+/* Function that will print the found token and its type */
 void print_token(char *token_type){
  fprintf(stderr, "At line: %d\t Token: < %s, %s >\n", lineno, yytext, token_type);
 }
 
+/* Function that will criticize a not defined found token */
 void error_handler(char *token, int line, int column) {
  printf("ERROR! The character %s is not defined (line: %d, column: %d)\n", token, line, column);
+}
+
+/* Function that will criticize unclosed tokens */
+void unclosed_comment_error_handler(int line, int column) {
+   printf("Alerta! Foi detectado um comentário de múltiplas linhas aberto mas não fechado (line: %d, column: %d)\n", line, column);
 }
 
 int main(int argc, char *argv[]){;
