@@ -17,4 +17,4 @@
 - *./tradutor tests/arquivo_teste.c*
 
 Há 4 arquivos de testes, sendo dois corretos e dois incorretos, na pasta */tests*.
-Basta substituir o me genérico *arquivo_teste.c* pelo nome do arquivo que deseja executar.
+Basta substituir o genérico *arquivo_teste.c* pelo nome do arquivo que deseja executar.
