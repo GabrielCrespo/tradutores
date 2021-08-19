@@ -3,6 +3,7 @@
   * dsddiiunsbdmbasdmbhkhsad
   *
   */
+float cool_float = 45.
 
  int get_even_numbers(int x) {
     return (x / 2) == 0;
@@ -22,6 +23,7 @@ int main() {
         read(number);
         L = number : L;
     }
+    writeln("");
 
     int list AUXL;
 

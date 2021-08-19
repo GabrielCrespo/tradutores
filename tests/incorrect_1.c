@@ -21,7 +21,7 @@ int main() {
  float list FL10;
  read(n);
    /*
-   Comentário de múltiplas linhas 
+   Comentário de múltiplas linhas */
  
  IL  = read_list(n);
  FL = succ >> IL;

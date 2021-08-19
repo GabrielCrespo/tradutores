@@ -13,12 +13,9 @@
  
  /* Variables that control the line and column values of a token */
  int lineno = 1, column = 1;
- /* Variables that control the line and column values of a comment */
- int begin_comment_line = 0, begin_comment_column = 0;
 
  void print_token(char *token_type);
  void error_handler(char *token, int line, int column);
- void unclosed_comment_error_handler(int line, int column);
 
 %}
 
@@ -29,10 +26,10 @@ letter            [a-zA-Z]
 digit             [0-9]
 alphanumeric      {letter}|{digit}
 identifier        {letter}+({alphanumeric}|_)*
-integer           [-]?{digit}*
-float             [-]?[0-9]*(\.[0-9]+)
+integer           {digit}*
+float             [0-9]*(\.[0-9]*)
 char              (\'(.|\\a|\\b|\\f|\\n|\\r|\\t|\\v|\\\\|\\\'|\\\"|\\\?)\')
-string            \"[^\"]*\"|'[^']*'
+string            \"[^\"]*\"
 
 %%
 
@@ -42,8 +39,6 @@ string            \"[^\"]*\"|'[^']*'
 
 <INITIAL>"/*" {
    BEGIN(MULTI_LINE_COMMENT);
-   begin_comment_line = lineno;
-   begin_comment_column = column;
 }
 
 <MULTI_LINE_COMMENT>"*/" {
@@ -56,11 +51,6 @@ string            \"[^\"]*\"|'[^']*'
 
 <MULTI_LINE_COMMENT>\n {
    lineno++;
-}
-
-<MULTI_LINE_COMMENT><<EOF>> { 
-   unclosed_comment_error_handler(begin_comment_line, begin_comment_column);
-   yyterminate();
 }
 
 "main"                  { print_token("MAIN"); column+=strlen(yytext); }
@@ -113,7 +103,6 @@ string            \"[^\"]*\"|'[^']*'
 "{"                     { print_token("L_BRACE"); column+=strlen(yytext); }
 "}"                     { print_token("R_BRACE"); column+=strlen(yytext); }
 ";"                     { print_token("SEMI"); column+=strlen(yytext); }
-"."                     { print_token("DOT"); column+=strlen(yytext); }
 ","                     { print_token("COMMA"); column+=strlen(yytext); }
 "&"                     { print_token("REFER"); column+=strlen(yytext); }
 
@@ -140,11 +129,6 @@ void print_token(char *token_type){
 /* Function that will criticize a not defined found token */
 void error_handler(char *token, int line, int column) {
  printf("ERROR! The character %s is not defined (line: %d, column: %d)\n", token, line, column);
-}
-
-/* Function that will criticize unclosed comments */
-void unclosed_comment_error_handler(int line, int column) {
-   printf("Alerta! Foi detectado um comentário de múltiplas linhas aberto mas não fechado (line: %d, column: %d)\n", line, column);
 }
 
 int main(int argc, char *argv[]){;
