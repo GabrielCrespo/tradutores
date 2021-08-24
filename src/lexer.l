@@ -10,6 +10,9 @@
  #include <stdio.h>
  #include <stdlib.h>
  #include <string.h>
+ #include "../lib/stack.h"
+ #include "../lib/list.h"
+ #include "../lib/structures.h"
  
  /* Variables that control the line and column values of a token */
  int lineno = 1, column = 1;

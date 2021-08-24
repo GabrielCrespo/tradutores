@@ -1,15 +1,19 @@
-all: stack compiler clean
+all: stack structure compiler clear
 
 stack:
 	gcc -c -g -Wall ./src/stack.c -o stack;
 	cp stack ./src;
 
+structure:
+	gcc -c -g -Wall ./src/structures.c -o structure;
+	cp structure ./src;
+
 compiler: lex.yy.c
-	gcc -g -Wall ./src/lex.yy.c -o tradutor -lfl;
+	gcc -c -g -Wall ./src/lex.yy.c -o tradutor -lfl;
 
 lex.yy.c:
 	flex src/lexer.l;
 	cp lex.yy.c ./src;
 
-clean:
-	rm stack lex.yy.c
+clear:
+	rm stack structure lex.yy.c
