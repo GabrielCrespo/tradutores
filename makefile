@@ -1,5 +1,7 @@
 tradutor:
 	flex src/lexer.l;
-	gcc -g -Wall ./src/symboltable.c lex.yy.c -o tradutor -lfl;
-	cp lex.yy.c ./src;
-	rm lex.yy.c;
+	bison -d src/sintatic.y;
+	gcc -g -Wall ./src/symboltable.c ./src/ast.c sintatic.tab.c lex.yy.c -o tradutor -lfl;
+	cp lex.yy.c sintatic.tab.c ./src;
+	cp sintatic.tab.h ./lib;
+	rm lex.yy.c sintatic.tab.c sintatic.tab.h;

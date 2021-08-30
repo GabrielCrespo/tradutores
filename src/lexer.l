@@ -10,14 +10,15 @@
  #include <stdio.h>
  #include <stdlib.h>
  #include <string.h>
- 
- /* Variables that control the line and column values of a token */
+ #include "sintatic.tab.h"
+
+ extern char* yytext;  
+ extern int yylex();
+
+/* Variables that control the line and column values of a token */
  int lineno = 1, column = 1;
 
- extern FILE *yyin;
- extern FILE *yyout;
-
- void print_token(char *token_type);
+//  void print_token(char *token_type);
  void error_handler(char *token, int line, int column);
 
 %}
@@ -56,64 +57,60 @@ string            \"[^\"]*\"
    lineno++;
 }
 
-"main"                  { print_token("MAIN"); column+=strlen(yytext); }
+"int"                   { strcpy(yylval.name, yytext); column+=strlen(yytext); return INT; }
+"float"                 { strcpy(yylval.name, yytext); column+=strlen(yytext); return FLOAT; }
+"list"                  { strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST; }
 
-"int"                   { print_token("INT_TYPE"); column+=strlen(yytext); }
-"float"                 { print_token("FLOAT_TYPE"); column+=strlen(yytext); }
-"list"                  { print_token("LIST_TYPE"); column+=strlen(yytext); }
+"NIL"                   { strcpy(yylval.name, yytext); column+=strlen(yytext); return NIL; }
 
-"NIL"                   { print_token("CONST_NIL"); column+=strlen(yytext); }
+"if"                    { strcpy(yylval.name, yytext); column+=strlen(yytext); return IF; }
+"else"                  { strcpy(yylval.name, yytext); column+=strlen(yytext); return ELSE; }
+"for"                   { strcpy(yylval.name, yytext); column+=strlen(yytext); return FOR; }
+"return"                { strcpy(yylval.name, yytext); column+=strlen(yytext); return RETURN; }
 
-"if"                    { print_token("IF"); column+=strlen(yytext); }
-"else"                  { print_token("ELSE"); column+=strlen(yytext); }
-"for"                   { print_token("FOR"); column+=strlen(yytext); }
-"return"                { print_token("RETURN"); column+=strlen(yytext); }
+"read"                  { strcpy(yylval.name, yytext); column+=strlen(yytext); return READ; }
+"write"                 { strcpy(yylval.name, yytext); column+=strlen(yytext); return WRITE; }
+"writeln"               { strcpy(yylval.name, yytext); column+=strlen(yytext); return WRITELN; }
 
-"read"                  { print_token("READ"); column+=strlen(yytext); }
-"write"                 { print_token("WRITE"); column+=strlen(yytext); }
-"writeln"               { print_token("WRITELN"); column+=strlen(yytext); }
+"+"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return SUM_OP; }
+"-"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return SUB_OP; }
+"*"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return MULT_OP; }
+"/"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return DIV_OP; }
 
-"+"                     { print_token("SUM_OP"); column+=strlen(yytext); }
-"-"                     { print_token("SUB_OP"); column+=strlen(yytext); }
-"*"                     { print_token("MULT_OP"); column+=strlen(yytext); }
-"/"                     { print_token("DIV_OP"); column+=strlen(yytext);}
+"?"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST_HEADER; }
+":"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST_CONSTRUCTOR; }
+"%"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST_TAIL; }
+">>"                    { strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST_MAP; }
+"<<"                    { strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST_FILTER; }
 
-"?"                     { print_token("LIST_HEADER"); column+=strlen(yytext); }
-":"                     { print_token("LIST_CONSTRUCTOR"); column+=strlen(yytext); }
-"%"                     { print_token("LIST_TAIL"); column+=strlen(yytext); }
-">>"                    { print_token("LIST_MAP"); column+=strlen(yytext); }
-"<<"                    { print_token("LIST_FILTER"); column+=strlen(yytext); }
+"!"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return EXC_OP; }
 
-"!"                     { print_token("EXC_OP"); column+=strlen(yytext); }
+"||"                    { strcpy(yylval.name, yytext); column+=strlen(yytext); return OR_OP; }
+"&&"                    { strcpy(yylval.name, yytext); column+=strlen(yytext); return AND_OP; }
 
-"||"                    { print_token("OR_OP"); column+=strlen(yytext); }
-"&&"                    { print_token("AND_OP"); column+=strlen(yytext); }
+"=="                    { strcpy(yylval.name, yytext); column+=strlen(yytext); return EQUAL_OP; }
+"!="                    { strcpy(yylval.name, yytext); column+=strlen(yytext); return DIFF_OP; }
 
-"=="                    { print_token("EQUAL_OP"); column+=strlen(yytext); }
-"!="                    { print_token("DIFF_OP"); column+=strlen(yytext); }
+">"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return LST_OP; }
+"<"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return GRT_OP; }
+"<="                    { strcpy(yylval.name, yytext); column+=strlen(yytext); return LST_EQ_OP; }
+">="                    { strcpy(yylval.name, yytext); column+=strlen(yytext); return GRT_EQ_OP; }
 
-">"                     { print_token("LST_OP"); column+=strlen(yytext); }
-"<"                     { print_token("GRT_OP"); column+=strlen(yytext); }
-"<="                    { print_token("LST_EQ_OP"); column+=strlen(yytext); }
-">="                    { print_token("GRT_EQ_OP"); column+=strlen(yytext); }
+"="                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return ASSIGN_OP; }	
 
-"="                     { print_token("ASSIGN_OP"); column+=strlen(yytext); }	
+"("                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return L_PAREN;  }
+")"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return R_PAREN; }
+"{"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return L_BRACE; }
+"}"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return R_BRACE; }
+";"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return SEMI; }
+","                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return COMMA; }
+"&"                     { strcpy(yylval.name, yytext); column+=strlen(yytext); return REFFER; }
 
-"("                     { print_token("L_PAREN"); column+=strlen(yytext); }
-")"                     { print_token("R_PAREN"); column+=strlen(yytext); }
-"]"                     { print_token("L_BRACK"); column+=strlen(yytext); }
-"["                     { print_token("R_BRACK"); column+=strlen(yytext); }
-"{"                     { print_token("L_BRACE"); column+=strlen(yytext); }
-"}"                     { print_token("R_BRACE"); column+=strlen(yytext); }
-";"                     { print_token("SEMI"); column+=strlen(yytext); }
-","                     { print_token("COMMA"); column+=strlen(yytext); }
-"&"                     { print_token("REFER"); column+=strlen(yytext); }
-
-{identifier}            { print_token("ID"); column+=strlen(yytext); }
-{integer}               { print_token("INT_CONST"); column+=strlen(yytext); }
-{float}                 { print_token("FLOAT_CONST"); column+=strlen(yytext); }
-{string}                { print_token("STRING"); column+=strlen(yytext); }
-{char}                  { print_token("CHAR"); column+=strlen(yytext); }
+{identifier}            { strcpy(yylval.name, yytext); column+=strlen(yytext); return ID; }
+{integer}               { strcpy(yylval.name, yytext); column+=strlen(yytext); return INT_CONST; }
+{float}                 { strcpy(yylval.name, yytext); column+=strlen(yytext); return FLOAT_CONST; }
+{string}                { strcpy(yylval.name, yytext); column+=strlen(yytext); return STRING; }
+{char}                  { strcpy(yylval.name, yytext); column+=strlen(yytext); return CHAR;}
 
 
 "\n"                    { lineno += 1; column=1; }
@@ -125,20 +122,20 @@ string            \"[^\"]*\"
 %%
 
 /* Function that will print the found token and its type */
-void print_token(char *token_type){
- fprintf(stderr, "At line: %d\t Token: < %s, %s >\n", lineno, yytext, token_type);
-}
+// void print_token(char *token_type){
+//  fprintf(stderr, "At line: %d\t Token: < %s, %s >\n", lineno, yytext, token_type);
+// }
 
 /* Function that will criticize a not defined found token */
 void error_handler(char *token, int line, int column) {
  printf("ERROR! The character %s is not defined (line: %d, column: %d)\n", token, line, column);
 }
 
-int main(int argc, char *argv[]){;
+// int main(int argc, char *argv[]){;
 
-   yyin = fopen(argv[1], "r");
-   yylex();
-   fclose(yyin);
-   yylex_destroy();
-   return 0;
-}
+//    yyin = fopen(argv[1], "r");
+//    yylex();
+//    fclose(yyin);
+//    yylex_destroy();
+//    return 0;
+// }

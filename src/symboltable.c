@@ -3,6 +3,8 @@
 #include <string.h>
 #include "../lib/symboltable.h"
 
+extern int present_scope;
+
 symbol_table *create_symbol_table()
 {
  symbol_table *table = (symbol_table *)malloc(sizeof(symbol_table));
@@ -14,29 +16,29 @@ symbol_table *create_symbol_table()
  return table;
 }
 
-symbol *create_symbol(char *identifier, char *scope, char *type, char *symbol_type, int line)
+symbol *create_symbol(char *identifier, char *type, int scope, char *symbol_type, int line)
 {
  symbol *new_symbol = (symbol *)malloc(sizeof(symbol));
  if (!new_symbol)
  {
   return NULL;
  }
- new_symbol->identifier = identifier;
+ strcpy(new_symbol->identifier, identifier);
+ strcpy(new_symbol->type, type);
  new_symbol->scope = scope;
- new_symbol->type = type;
- new_symbol->symbol_type = symbol_type;
+ strcpy(new_symbol->symbol_type, symbol_type);
  new_symbol->line = line;
  new_symbol->next = NULL;
 
  return new_symbol;
 }
 
-void insert_symbol(symbol_table *table, char *identifier, char *scope, char *type, char *symbol_type, int line)
+void insert_symbol(symbol_table *table, char *identifier, char *type, char *symbol_type, int line)
 {
  symbol *current_symbol = NULL;
  if (table->head == NULL)
  {
-  table->head = create_symbol(identifier, scope, type, symbol_type, line);
+  table->head = create_symbol(identifier, type, present_scope, symbol_type, line);
  }
  else
  {
@@ -45,7 +47,7 @@ void insert_symbol(symbol_table *table, char *identifier, char *scope, char *typ
   {
    current_symbol = current_symbol->next;
   }
-  current_symbol->next = create_symbol(identifier, scope, type, symbol_type, line);
+  current_symbol->next = create_symbol(identifier, type, present_scope, symbol_type, line);
  }
 }
 
@@ -57,10 +59,10 @@ void show_symbol_table(symbol_table *table)
  {
   return;
  }
- printf("\n|=================================SYMBOL TABLE===================================|\n");
+ printf("\n|===============================================SYMBOL TABLE=================================================|\n");
  for (; current_symbol != NULL; current_symbol = current_symbol->next)
  {
-  printf("| identifier: %5s | scope: %5s | type %5s | symbol type: %5s | line: %5d |\n", current_symbol->identifier, current_symbol->scope, current_symbol->type, current_symbol->symbol_type, current_symbol->line);
+  printf("| identifier: %10s | scope: %10d | type: %10s | symbol type: %10s | line: %10d |\n", current_symbol->identifier, current_symbol->scope, current_symbol->type, current_symbol->symbol_type, current_symbol->line);
  }
 }
 
