@@ -16,9 +16,6 @@
 
  extern void yyerror(const char *tt_name);
 
- extern int lineno; 
- extern int column;
-
  int present_scope = 0;
 
  symbol_table* table;
@@ -28,6 +25,7 @@
 
 %union token {
  char name[100];
+ int lineno, column;
  struct tree_element* element;
 }
 
@@ -61,10 +59,10 @@
 %token <name> LST_EQ_OP
 %token <name> GRT_EQ_OP
 %token <name> ASSIGN_OP
-%token <name> L_PAREN
-%token <name> R_PAREN
-%token <name> L_BRACE
-%token <name> R_BRACE
+%token <name> '('
+%token <name> ')'
+%token <name> '{'
+%token <name> '}'
 %token <name> SEMI
 %token <name> COMMA
 %token <name> REFFER
@@ -75,13 +73,53 @@
 %token <name> CHAR 
 
 
-%type <element> variable_simple_declaration
-%type <element> list_simple_declaration
-%type <element> function_declaration
-%type <element> function_simple_declaration
-%type <element> type_specifier
+%type <element> program
+%type <element> declarations
+%type <element> declaration
 %type <element> variable_declaration
 %type <element> list_declaration
+%type <element> function_declaration
+%type <element> type_specifier
+%type <element> parameters
+%type <element> list_paremeters
+%type <element> parameter
+%type <element> variable_simple_declarations
+%type <element> list_simple_declaration
+%type <element> function_simple_declaration
+%type <element> compound_statement
+%type <element> local_declarations
+%type <element> list_statements
+%type <element> statement
+%type <element> conditional_statement
+%type <element> iteration_statement
+%type <element> expression_statement
+%type <element> return_statement
+%type <element> expression
+%type <element> assign_expression
+%type <element> simple_expression
+%type <element> relational_expression
+%type <element> arithmetic_add_expression
+%type <element> arithmetic_mul_expression
+%type <element> unary_sub_expression
+%type <element> factor
+%type <element> relational_op
+%type <element> arithmetic_add_op
+%type <element> arithmetic_mult_op
+%type <element> binary_logic_op
+%type <element> list_expression
+%type <element> constructor
+%type <element> header
+%type <element> tail
+%type <element> map
+%type <element> filter
+%type <element> list_comparation
+%type <element> in_out_expression
+%type <element> read
+%type <element> write
+%type <element> function_call
+%type <element> arguments
+%type <element> list_arguments
+%type <element> var
 
 %%
 program: declarations;
@@ -98,7 +136,7 @@ list_declaration: list_simple_declaration SEMI {
   //$$ = $1;
 };
 
-function_declaration: function_simple_declaration L_PAREN parameters R_PAREN compound_statement | function_simple_declaration L_PAREN R_PAREN compound_statement;
+function_declaration: function_simple_declaration '(' parameters ')' compound_statement | function_simple_declaration '(' ')' compound_statement;
 
 type_specifier: INT | FLOAT;
 
@@ -122,7 +160,7 @@ function_simple_declaration: type_specifier ID {
   insert_symbol(table, $3, $2, "function", lineno);
 };
 
-compound_statement: L_BRACE local_declarations R_BRACE;
+compound_statement: '{' local_declarations '}';
 
 local_declarations: list_statements;
 
@@ -130,9 +168,9 @@ list_statements: list_statements statement | statement;
 
 statement: expression_statement | compound_statement | conditional_statement | iteration_statement | return_statement | variable_declaration | list_declaration | in_out_expression;
 
-conditional_statement: IF L_PAREN expression R_PAREN statement | IF L_PAREN expression R_PAREN statement ELSE statement;
+conditional_statement: IF '(' expression ')' statement | IF '(' expression ')' statement ELSE statement;
 
-iteration_statement: FOR L_PAREN expression_statement expression_statement expression R_PAREN statement;
+iteration_statement: FOR '(' expression_statement expression_statement expression ')' statement;
 
 expression_statement: expression SEMI | SEMI;
 
@@ -152,7 +190,7 @@ arithmetic_mul_expression: arithmetic_mul_expression arithmetic_mult_op unary_su
 
 unary_sub_expression: SUB_OP factor | factor;
 
-factor: L_PAREN expression R_PAREN | function_call | ID | INT_CONST | FLOAT_CONST;
+factor: '(' expression ')' | function_call | ID | INT_CONST | FLOAT_CONST;
 
 relational_op: LST_OP | LST_EQ_OP | GRT_OP | GRT_EQ_OP | EQUAL_OP | DIFF_OP;
 
@@ -178,11 +216,11 @@ list_comparation: ID EQUAL_OP NIL | ID DIFF_OP NIL;
 
 in_out_expression: read SEMI | write SEMI;
 
-read: READ L_PAREN ID R_PAREN;
+read: READ '(' ID ')';
 
-write: WRITE L_PAREN var R_PAREN | WRITELN L_PAREN var R_PAREN;
+write: WRITE '(' var ')' | WRITELN '(' var ')';
 
-function_call: ID L_PAREN arguments R_PAREN | ID L_PAREN R_PAREN;
+function_call: ID '(' arguments ')' | ID '(' ')';
 
 arguments: list_arguments;
 
