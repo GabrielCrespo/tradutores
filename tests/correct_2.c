@@ -3,7 +3,7 @@
   * dsddiiunsbdmbasdmbhkhsad
   *
   */
-float cool_float = 45.
+float cool_float;
 
  int get_even_numbers(int x) {
     return (x / 2) == 0;
@@ -11,13 +11,15 @@ float cool_float = 45.
 
 int main() {
 
+    cool_float = 45.;
+
     float j;
     int i;
     int list L;
     
     j = .5;
 
-    for(i = 0; i < 10; i++) {
+    for(i = 0; i < 10; i = i + 1) {
         int number;
         write("Enter a number: ");
         read(number);

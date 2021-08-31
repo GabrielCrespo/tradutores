@@ -59,10 +59,10 @@ void show_symbol_table(symbol_table *table)
  {
   return;
  }
- printf("\n|===============================================SYMBOL TABLE=================================================|\n");
+ printf("\n|======================================================SYMBOL TABLE========================================================|\n");
  for (; current_symbol != NULL; current_symbol = current_symbol->next)
  {
-  printf("| identifier: %10s | scope: %10d | type: %10s | symbol type: %10s | line: %10d |\n", current_symbol->identifier, current_symbol->scope, current_symbol->type, current_symbol->symbol_type, current_symbol->line);
+  printf("| identifier: %20s | scope: %11d | type: %11s | symbol type: %11s | line: %11d |\n", current_symbol->identifier, current_symbol->scope, current_symbol->type, current_symbol->symbol_type, current_symbol->line);
  }
 }
 
