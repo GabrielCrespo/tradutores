@@ -911,213 +911,213 @@ YY_RULE_SETUP
 case 7:
 YY_RULE_SETUP
 #line 61 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return INT; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return INT; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 62 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return FLOAT; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return FLOAT; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 63 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 65 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return NIL; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return NIL; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 67 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return IF; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return IF; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 68 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return ELSE; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return ELSE; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 69 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return FOR; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return FOR; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 70 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return RETURN; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return RETURN; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 72 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return READ; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return READ; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 73 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return WRITE; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return WRITE; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 74 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return WRITELN; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return WRITELN; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 76 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return SUM_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return SUM_OP; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 77 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return SUB_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return SUB_OP; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 78 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return MULT_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return MULT_OP; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 79 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return DIV_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return DIV_OP; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 81 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST_HEADER; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST_HEADER; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 82 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST_CONSTRUCTOR; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST_CONSTRUCTOR; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 83 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST_TAIL; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST_TAIL; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 84 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST_MAP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST_MAP; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 85 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return LIST_FILTER; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST_FILTER; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 87 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return EXC_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return EXC_OP; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 89 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return OR_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return OR_OP; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 90 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return AND_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return AND_OP; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 92 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return EQUAL_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return EQUAL_OP; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 93 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return DIFF_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return DIFF_OP; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 95 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return LST_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LST_OP; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 96 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return GRT_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return GRT_OP; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 97 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return LST_EQ_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LST_EQ_OP; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 98 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return GRT_EQ_OP; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return GRT_EQ_OP; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 100 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return ASSIGN_OP; }	
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return ASSIGN_OP; }	
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 102 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return L_PAREN;  }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 40 + '0';  }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 103 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return R_PAREN; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 41 + '0'; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 104 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return L_BRACE; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 123 + '0'; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 105 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return R_BRACE; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 125 + '0'; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 106 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return SEMI; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return SEMI; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
 #line 107 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return COMMA; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return COMMA; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
 #line 108 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return REFFER; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return REFFER; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
 #line 110 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return ID; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return ID; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
 #line 111 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return INT_CONST; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return INT_CONST; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
 #line 112 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return FLOAT_CONST; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return FLOAT_CONST; }
 	YY_BREAK
 case 47:
 /* rule 47 can match eol */
 YY_RULE_SETUP
 #line 113 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return STRING; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return STRING; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
 #line 114 "src/lexer.l"
-{ strcpy(yylval.name, yytext); column+=strlen(yytext); return CHAR;}
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return CHAR;}
 	YY_BREAK
 case 49:
 /* rule 49 can match eol */

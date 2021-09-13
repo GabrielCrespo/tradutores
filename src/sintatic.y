@@ -1,4 +1,5 @@
 %debug
+%locations
 %define parse.error verbose
 %define lr.type canonical-lr
 
@@ -16,17 +17,18 @@
 
  extern void yyerror(const char *tt_name);
 
+ extern int lineno;
+ extern int column;
  int present_scope = 0;
 
- symbol_table* table;
- tree_element* tree;
+ symbol_table* table = NULL;
+ tree_element* tree = NULL;
 
 %}
 
 %union token {
- char name[100];
- int lineno, column;
- struct tree_element* element;
+  char* name;
+  struct tree_element* element;
 }
 
 %token <name> INT
@@ -83,7 +85,7 @@
 %type <element> parameters
 %type <element> list_paremeters
 %type <element> parameter
-%type <element> variable_simple_declarations
+%type <element> variable_simple_declaration
 %type <element> list_simple_declaration
 %type <element> function_simple_declaration
 %type <element> compound_statement
@@ -122,49 +124,120 @@
 %type <element> var
 
 %%
-program: declarations;
+
+program: declarations {
+ $$ = create_element(PROGRAM, NULL, NULL, NULL, $1);
+ tree = $$;
+};
  
-declarations: declarations declaration | declaration;
+declarations: declarations declaration {
+  $$ = create_element(DECLARATIONS, NULL, NULL, NULL, $1);
+  $1->next_left = $2;
+
+} | declaration {
+  $$ = $1;
+};
  
-declaration: variable_declaration | list_declaration | function_declaration | error;
+declaration: variable_declaration {
+  $$ = $1;
+} | list_declaration {
+  $$ = $1;
+} | function_declaration {
+  $$ = $1;
+} | error {
+  yyerrok;
+  $$ = NULL;
+};
  
 variable_declaration: variable_simple_declaration SEMI {
-   //$$ = $1;
+  $$ = $1;
 };
  
 list_declaration: list_simple_declaration SEMI {
-  //$$ = $1;
+  $$ = $1;
 };
 
-function_declaration: function_simple_declaration '(' parameters ')' compound_statement | function_simple_declaration '(' ')' compound_statement;
+function_declaration: 
+  type_specifier ID '(' parameters ')' compound_statement {
+    $$ = create_element(FUNCTION_DECLARATION, $1->type, $2, NULL, $4);
+    $4->next_left = $6;
+    insert_symbol(table, $2, $1->type, "function", lineno);
+} | 
+  type_specifier LIST ID '(' parameters ')' compound_statement {
+    $$ = create_element(FUNCTION_DECLARATION, $2, $3, NULL, $5);
+    $5->next_left = $7;
+    insert_symbol(table, $3, $2, "function", lineno);
+} | 
+  type_specifier ID '(' ')' compound_statement {
+    $$ = create_element(FUNCTION_DECLARATION, $1->type, $2, NULL, NULL);
+    insert_symbol(table, $3, $1->type, "function", lineno);
+} | 
+  type_specifier LIST ID '(' ')' compound_statement {
+   $$ = create_element(FUNCTION_DECLARATION, $2, $3, NULL, NULL);
+   insert_symbol(table, $3, $2, "function", lineno);
+};
 
-type_specifier: INT | FLOAT;
+parameters: list_paremeters {
+  $$ = $1;
+};
 
-parameters: list_paremeters;
+list_paremeters: list_paremeters COMMA parameter {
+  $$ = create_element(LIST_PARAMETERS, NULL, NULL, NULL, $1);
+  $1->next_right = $3;
+} | parameter {
+  $$ = $1;
+};
 
-list_paremeters: list_paremeters COMMA parameter | parameter;
-
-parameter: variable_simple_declaration | list_simple_declaration;
+parameter: variable_simple_declaration {
+  $$ = $1;
+} | list_simple_declaration {
+  $$ = $1;
+};
 
 variable_simple_declaration: type_specifier ID {
-  insert_symbol(table, $2, $1, "variable", lineno);
+  $$ = create_element(VARIABLE_SIMPLE_DECLARATION, $1->type, $2, NULL, NULL);
+  insert_symbol(table, $2, $1->type, "variable", lineno);
 };
 
 list_simple_declaration: type_specifier LIST ID {
+  $$ = create_element(LIST_SIMPLE_DECLARATION, $2, $3, NULL, NULL);
   insert_symbol(table, $3, $2, "variable", lineno);
 };
 
 function_simple_declaration: type_specifier ID {
-  insert_symbol(table, $2, $1, "function", lineno);
+  $$ = create_element(FUNCTION_SIMPLE_DECLARATION, $1->type, $2, NULL, NULL);
+  insert_symbol(table, $2, $1->type, "function", lineno);
 } | type_specifier LIST ID {
+  $$ = create_element(FUNCTION_SIMPLE_DECLARATION, $2, $3, NULL, NULL);
   insert_symbol(table, $3, $2, "function", lineno);
 };
 
-compound_statement: '{' local_declarations '}';
+type_specifier: INT {
+  $$ = create_element(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
+} | FLOAT {
+  $$ = create_element(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
+};
 
-local_declarations: list_statements;
+compound_statement: 
+ '{' 
+    { 
+     present_scope+=1;
+    }
+      local_declarations '}' {
+       $$ = create_element(COMPOUND_STATEMENT, NULL, NULL, NULL, $3);
+       present_scope--;
+      };
 
-list_statements: list_statements statement | statement;
+local_declarations: list_statements {
+ $$ = $1;
+};
+
+list_statements: list_statements statement {
+ $$ = create_element(LIST_STATEMENTS, NULL, NULL, NULL, $1);
+ $1->next_left = $2; 
+} | statement {
+ $$ = $1;
+};
 
 statement: expression_statement | compound_statement | conditional_statement | iteration_statement | return_statement | variable_declaration | list_declaration | in_out_expression;
 
@@ -231,10 +304,15 @@ var: STRING | CHAR | list_expression | simple_expression;
 %%
 
 extern void yyerror(const char *tt_name) {
-  printf("yyerror: %s em linha: %d coluna: %d.\n", tt_name, lineno, column);
+  //printf("\nyyerror: %s em linha: %d coluna: %d.\n", tt_name, yylval.lex.lineno, yylval.lex.column);
 }
 
 int main(int argc, char *argv[]){
+
+  // #ifdef YYDEBUG
+  //   yydebug = 1;
+  // #endif
+
   yyin = fopen(argv[1], "r");
 
   table = create_symbol_table();
@@ -243,19 +321,14 @@ int main(int argc, char *argv[]){
   fclose(yyin);
   yylex_destroy();
 
+
+  printf("\n\n\n==================ABSTRACT TREE==================\n\n");
+  show_tree(tree, 0);
+
   show_symbol_table(table);
+
+  free_tree(tree);
   free_symbol_table(table);
-
-  //  if(error_count > 0){
-  //    printf("\nThe lexical analisys finished with %d errors found.\n", error_count);
-  //  }
-
-  // printf("\n\n\n________________| ABSTRACT TREE |________________\n\n");
-  // print_tree(abstract_tree, 0);
-  // print_symbol_table();
-
-  // free_ast(abstract_tree);
-  // free_symbol_table();
 
   return 0;
 }

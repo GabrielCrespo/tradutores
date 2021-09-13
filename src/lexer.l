@@ -57,60 +57,60 @@ string            \"[^\"]*\"
    lineno++;
 }
 
-"int"                   { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return INT; }
-"float"                 { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return FLOAT; }
-"list"                  { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return LIST; }
+"int"                   { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return INT; }
+"float"                 { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return FLOAT; }
+"list"                  { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST; }
 
-"NIL"                   { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return NIL; }
+"NIL"                   { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return NIL; }
 
-"if"                    { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return IF; }
-"else"                  { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return ELSE; }
-"for"                   { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return FOR; }
-"return"                { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return RETURN; }
+"if"                    { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return IF; }
+"else"                  { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return ELSE; }
+"for"                   { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return FOR; }
+"return"                { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return RETURN; }
 
-"read"                  { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return READ; }
-"write"                 { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return WRITE; }
-"writeln"               { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return WRITELN; }
+"read"                  { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return READ; }
+"write"                 { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return WRITE; }
+"writeln"               { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return WRITELN; }
 
-"+"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return SUM_OP; }
-"-"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return SUB_OP; }
-"*"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return MULT_OP; }
-"/"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return DIV_OP; }
+"+"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return SUM_OP; }
+"-"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return SUB_OP; }
+"*"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return MULT_OP; }
+"/"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return DIV_OP; }
 
-"?"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return LIST_HEADER; }
-":"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return LIST_CONSTRUCTOR; }
-"%"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return LIST_TAIL; }
-">>"                    { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return LIST_MAP; }
-"<<"                    { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return LIST_FILTER; }
+"?"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST_HEADER; }
+":"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST_CONSTRUCTOR; }
+"%"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST_TAIL; }
+">>"                    { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST_MAP; }
+"<<"                    { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LIST_FILTER; }
 
-"!"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return EXC_OP; }
+"!"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return EXC_OP; }
 
-"||"                    { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return OR_OP; }
-"&&"                    { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return AND_OP; }
+"||"                    { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return OR_OP; }
+"&&"                    { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return AND_OP; }
 
-"=="                    { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return EQUAL_OP; }
-"!="                    { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return DIFF_OP; }
+"=="                    { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return EQUAL_OP; }
+"!="                    { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return DIFF_OP; }
 
-">"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return LST_OP; }
-"<"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return GRT_OP; }
-"<="                    { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return LST_EQ_OP; }
-">="                    { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return GRT_EQ_OP; }
+">"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LST_OP; }
+"<"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return GRT_OP; }
+"<="                    { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return LST_EQ_OP; }
+">="                    { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return GRT_EQ_OP; }
 
-"="                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return ASSIGN_OP; }	
+"="                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return ASSIGN_OP; }	
 
-"("                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return 40 + '0';  }
-")"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return 41 + '0'; }
-"{"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return 123 + '0'; }
-"}"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return 125 + '0'; }
-";"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return SEMI; }
-","                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return COMMA; }
-"&"                     { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return REFFER; }
+"("                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 40 + '0';  }
+")"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 41 + '0'; }
+"{"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 123 + '0'; }
+"}"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 125 + '0'; }
+";"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return SEMI; }
+","                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return COMMA; }
+"&"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return REFFER; }
 
-{identifier}            { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return ID; }
-{integer}               { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return INT_CONST; }
-{float}                 { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return FLOAT_CONST; }
-{string}                { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return STRING; }
-{char}                  { strcpy(yylval.name, yytext); yylval.lineno = lineno; yylval.column = column; column+=strlen(yytext); return CHAR;}
+{identifier}            { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return ID; }
+{integer}               { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return INT_CONST; }
+{float}                 { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return FLOAT_CONST; }
+{string}                { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return STRING; }
+{char}                  { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return CHAR;}
 
 
 "\n"                    { lineno += 1; column=1; }
