@@ -84,14 +84,18 @@ extern int yydebug;
     LST_EQ_OP = 285,               /* LST_EQ_OP  */
     GRT_EQ_OP = 286,               /* GRT_EQ_OP  */
     ASSIGN_OP = 287,               /* ASSIGN_OP  */
-    SEMI = 288,                    /* SEMI  */
-    COMMA = 289,                   /* COMMA  */
-    REFFER = 290,                  /* REFFER  */
-    ID = 291,                      /* ID  */
-    INT_CONST = 292,               /* INT_CONST  */
-    FLOAT_CONST = 293,             /* FLOAT_CONST  */
-    STRING = 294,                  /* STRING  */
-    CHAR = 295                     /* CHAR  */
+    L_PAREN = 288,                 /* L_PAREN  */
+    R_PAREN = 289,                 /* R_PAREN  */
+    L_BRACK = 290,                 /* L_BRACK  */
+    R_BRACK = 291,                 /* R_BRACK  */
+    SEMI = 292,                    /* SEMI  */
+    COMMA = 293,                   /* COMMA  */
+    REFFER = 294,                  /* REFFER  */
+    ID = 295,                      /* ID  */
+    INT_CONST = 296,               /* INT_CONST  */
+    FLOAT_CONST = 297,             /* FLOAT_CONST  */
+    STRING = 298,                  /* STRING  */
+    CHAR = 299                     /* CHAR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -106,7 +110,7 @@ union token
   char* name;
   struct tree_element* element;
 
-#line 110 "sintatic.tab.h"
+#line 114 "sintatic.tab.h"
 
 };
 #line 29 "src/sintatic.y"

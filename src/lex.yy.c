@@ -1061,22 +1061,22 @@ YY_RULE_SETUP
 case 37:
 YY_RULE_SETUP
 #line 102 "src/lexer.l"
-{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 40 + '0';  }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return L_PAREN;  }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 103 "src/lexer.l"
-{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 41 + '0'; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return R_PAREN; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 104 "src/lexer.l"
-{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 123 + '0'; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return L_BRACK; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 105 "src/lexer.l"
-{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 125 + '0'; }
+{ yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return R_BRACK; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP

@@ -98,10 +98,10 @@ string            \"[^\"]*\"
 
 "="                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return ASSIGN_OP; }	
 
-"("                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 40 + '0';  }
-")"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 41 + '0'; }
-"{"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 123 + '0'; }
-"}"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return 125 + '0'; }
+"("                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return L_PAREN;  }
+")"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return R_PAREN; }
+"{"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return L_BRACK; }
+"}"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return R_BRACK; }
 ";"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return SEMI; }
 ","                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return COMMA; }
 "&"                     { yylval.name = (char*) strdup(yytext);  column+=strlen(yytext); return REFFER; }
