@@ -54,48 +54,49 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    INT = 258,                     /* INT  */
-    FLOAT = 259,                   /* FLOAT  */
-    LIST = 260,                    /* LIST  */
-    NIL = 261,                     /* NIL  */
-    IF = 262,                      /* IF  */
-    ELSE = 263,                    /* ELSE  */
-    FOR = 264,                     /* FOR  */
-    RETURN = 265,                  /* RETURN  */
-    READ = 266,                    /* READ  */
-    WRITE = 267,                   /* WRITE  */
-    WRITELN = 268,                 /* WRITELN  */
-    SUM_OP = 269,                  /* SUM_OP  */
-    SUB_OP = 270,                  /* SUB_OP  */
-    MULT_OP = 271,                 /* MULT_OP  */
-    DIV_OP = 272,                  /* DIV_OP  */
-    LIST_HEADER = 273,             /* LIST_HEADER  */
-    LIST_CONSTRUCTOR = 274,        /* LIST_CONSTRUCTOR  */
-    LIST_TAIL = 275,               /* LIST_TAIL  */
-    LIST_MAP = 276,                /* LIST_MAP  */
-    LIST_FILTER = 277,             /* LIST_FILTER  */
-    EXC_OP = 278,                  /* EXC_OP  */
-    OR_OP = 279,                   /* OR_OP  */
-    AND_OP = 280,                  /* AND_OP  */
-    EQUAL_OP = 281,                /* EQUAL_OP  */
-    DIFF_OP = 282,                 /* DIFF_OP  */
-    LST_OP = 283,                  /* LST_OP  */
-    GRT_OP = 284,                  /* GRT_OP  */
-    LST_EQ_OP = 285,               /* LST_EQ_OP  */
-    GRT_EQ_OP = 286,               /* GRT_EQ_OP  */
-    ASSIGN_OP = 287,               /* ASSIGN_OP  */
-    L_PAREN = 288,                 /* L_PAREN  */
-    R_PAREN = 289,                 /* R_PAREN  */
-    L_BRACK = 290,                 /* L_BRACK  */
-    R_BRACK = 291,                 /* R_BRACK  */
-    SEMI = 292,                    /* SEMI  */
-    COMMA = 293,                   /* COMMA  */
-    REFFER = 294,                  /* REFFER  */
-    ID = 295,                      /* ID  */
-    INT_CONST = 296,               /* INT_CONST  */
-    FLOAT_CONST = 297,             /* FLOAT_CONST  */
-    STRING = 298,                  /* STRING  */
-    CHAR = 299                     /* CHAR  */
+    THEN = 258,                    /* THEN  */
+    INT = 259,                     /* INT  */
+    FLOAT = 260,                   /* FLOAT  */
+    LIST = 261,                    /* LIST  */
+    NIL = 262,                     /* NIL  */
+    IF = 263,                      /* IF  */
+    ELSE = 264,                    /* ELSE  */
+    FOR = 265,                     /* FOR  */
+    RETURN = 266,                  /* RETURN  */
+    READ = 267,                    /* READ  */
+    WRITE = 268,                   /* WRITE  */
+    WRITELN = 269,                 /* WRITELN  */
+    SUM_OP = 270,                  /* SUM_OP  */
+    SUB_OP = 271,                  /* SUB_OP  */
+    MULT_OP = 272,                 /* MULT_OP  */
+    DIV_OP = 273,                  /* DIV_OP  */
+    LIST_HEADER = 274,             /* LIST_HEADER  */
+    LIST_CONSTRUCTOR = 275,        /* LIST_CONSTRUCTOR  */
+    LIST_TAIL = 276,               /* LIST_TAIL  */
+    LIST_MAP = 277,                /* LIST_MAP  */
+    LIST_FILTER = 278,             /* LIST_FILTER  */
+    EXC_OP = 279,                  /* EXC_OP  */
+    OR_OP = 280,                   /* OR_OP  */
+    AND_OP = 281,                  /* AND_OP  */
+    EQUAL_OP = 282,                /* EQUAL_OP  */
+    DIFF_OP = 283,                 /* DIFF_OP  */
+    LST_OP = 284,                  /* LST_OP  */
+    GRT_OP = 285,                  /* GRT_OP  */
+    LST_EQ_OP = 286,               /* LST_EQ_OP  */
+    GRT_EQ_OP = 287,               /* GRT_EQ_OP  */
+    ASSIGN_OP = 288,               /* ASSIGN_OP  */
+    L_PAREN = 289,                 /* L_PAREN  */
+    R_PAREN = 290,                 /* R_PAREN  */
+    L_BRACK = 291,                 /* L_BRACK  */
+    R_BRACK = 292,                 /* R_BRACK  */
+    SEMI = 293,                    /* SEMI  */
+    COMMA = 294,                   /* COMMA  */
+    REFFER = 295,                  /* REFFER  */
+    ID = 296,                      /* ID  */
+    INT_CONST = 297,               /* INT_CONST  */
+    FLOAT_CONST = 298,             /* FLOAT_CONST  */
+    STRING = 299,                  /* STRING  */
+    CHAR = 300                     /* CHAR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -110,7 +111,7 @@ union token
   char* name;
   struct tree_element* element;
 
-#line 114 "sintatic.tab.h"
+#line 115 "sintatic.tab.h"
 
 };
 #line 29 "src/sintatic.y"

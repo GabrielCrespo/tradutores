@@ -31,6 +31,8 @@
   struct tree_element* element;
 }
 
+%right THEN ELSE
+
 %token <name> INT
 %token <name> FLOAT
 %token <name> LIST
@@ -170,7 +172,7 @@ function_declaration:
 } | 
   type_specifier ID L_PAREN R_PAREN compound_statement {
     $$ = create_element(FUNCTION_DECLARATION, $1->type, $2, NULL, NULL);
-    insert_symbol(table, $3, $1->type, "function", lineno);
+    insert_symbol(table, $2, $1->type, "function", lineno);
 } | 
   type_specifier LIST ID L_PAREN R_PAREN compound_statement {
    $$ = create_element(FUNCTION_DECLARATION, $2, $3, NULL, NULL);
@@ -249,7 +251,7 @@ statement: expression_statement {
   $$ = $1;
 };
 
-conditional_statement: IF L_PAREN expression R_PAREN statement {
+conditional_statement: IF L_PAREN expression R_PAREN statement %prec THEN {
   $$ = create_element(CONDITIONAL_STATEMENT, NULL, NULL, NULL, $3);
   $3->next_left = $5;
 } | IF L_PAREN expression R_PAREN statement ELSE statement {
@@ -469,8 +471,8 @@ var: STRING {
 
 %%
 
-extern void yyerror(const char *tt_name) {
-  //printf("\nyyerror: %s em linha: %d coluna: %d.\n", tt_name, yylval.lex.lineno, yylval.lex.column);
+extern void yyerror(const char *name) {
+  printf("\nyyerror: %s em linha: %d coluna: %d.\n", name, lineno, column);
 }
 
 int main(int argc, char *argv[]){
