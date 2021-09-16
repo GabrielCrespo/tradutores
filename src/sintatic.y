@@ -20,6 +20,7 @@
  extern int lineno;
  extern int column;
  int present_scope = 0;
+ int sintatic_errors = 0;
 
  symbol_table* table = NULL;
  tree_element* tree = NULL;
@@ -32,6 +33,10 @@
 }
 
 %right THEN ELSE
+%right LIST_HEADER LIST_TAIL LIST_MAP LIST_FILTER
+%left SUM_OP SUB_OP MULT_OP DIV_OP
+%left OR AND NOT
+%left LST_OP GRT_OP LST_EQ_OP GRT_EQ_OP EQUAL_OP DIFF_OP
 
 %token <name> INT
 %token <name> FLOAT
@@ -473,6 +478,7 @@ var: STRING {
 
 extern void yyerror(const char *name) {
   printf("\nyyerror: %s em linha: %d coluna: %d.\n", name, lineno, column);
+  sintatic_errors++;
 }
 
 int main(int argc, char *argv[]){
@@ -489,14 +495,15 @@ int main(int argc, char *argv[]){
   fclose(yyin);
   yylex_destroy();
 
+  if(sintatic_errors == 0) {
+     printf("\n\n\n==================ABSTRACT TREE==================\n\n");
+     show_tree(tree, 0);
 
-  printf("\n\n\n==================ABSTRACT TREE==================\n\n");
-  show_tree(tree, 0);
+     show_symbol_table(table);
 
-  show_symbol_table(table);
-
-  free_tree(tree);
-  free_symbol_table(table);
+     free_tree(tree);
+     free_symbol_table(table);
+  }
 
   return 0;
 }

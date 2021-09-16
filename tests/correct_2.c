@@ -16,6 +16,13 @@ int main() {
     float j;
     int i;
     int list L;
+    int b;
+    int c;
+    int d;
+
+    int a;
+
+     a = b + c * d;
     
     j = .5;
 

@@ -9,7 +9,8 @@
 ## Versões utilizadas nesse projeto até o momento:
 
 - *gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0*
-- *flex 2.6.4*
+- *flex - 2.6.4*
+- *bison - 3.7.6*
 
 ## Instruções de execução: 
 

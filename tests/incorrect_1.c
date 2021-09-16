@@ -1,43 +1,50 @@
-float f() {
-  int x = 10$15;
-  float ponto = .91;
-  write("Gabriel");
-  write('a');
-  
+  /*
+  *
+  * dsddiiunsbdmbasdmbhkhsad
+  *
+  */
+float cool_float;
 
-  //Comentário de Linha Legal
-
-                      
-   return 1;
+ int get_even_numbers(int x) {
+    return (x / 2) == 0
 }
 
 int main() {
 
- writeln("Digite os numero de elementos da lista: ");
+    cool_float = 45.;
 
- f();
+    float j;
+    int i;
+    int list L;
+    int b@;
+    int c;
+    int d;
 
- int n;
- float list FL10;
- read(n);
-   /*
-   Comentário de múltiplas linhas */
- 
- IL  = read_list(n);
- FL = succ >> IL;
+    int a;
 
- FL10 = leq_10 <<  FL;
- if (FL10 != NIL) {
-  float list AUXL;
-  int n; n = 0 * ##;
-  for (AUXL=FL10; AUXL != NIL; AUXL = !AUXL) {
-   n = n + 1;
-   write(?AUXL); write(" ");
-  }
-  writeln(" ");
-  write("A nova lista tem "); write(n); writeln(" elementos.");
- }
- else writeln("A nova lista não possui elementos.");
+    a = b + c * d;
+    
+    j = .5;
 
- return 0;
+    for(i = 0; i < 10; i = i + 1) {
+        int number;
+        write("Enter a number: ");
+        read(number);
+        L = number : L;
+    }
+    writeln("");
+
+    int list AUXL;
+
+    AUXL = get_even_numbers << L;
+
+    int list AUXL;
+    int list IT;
+
+    for (IT=NEW_LIST; IT != NIL; IT = !IT) {
+        write(?IT); 
+        write(" ");
+    }
+
+    return 0;
 }

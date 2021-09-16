@@ -16,7 +16,7 @@ int list read_list(int n) {
 }
 
 float succ(int i) {
- return i@1;
+ return i + 1;
 }
 
 
@@ -40,7 +40,7 @@ int main() {
  if (FL10 != NIL) {
   float list AUXL;
   int n; n = 0;
-  for (AUXL=FL10; AUXL != NIL; AUXL = !AUXL; #) {
+  for (AUXL=FL10; AUXL != NIL; AUXL = !AUXL;) {
    n = n + 1;
    write(?AUXL); write(AUXL); write(" ");
   }
